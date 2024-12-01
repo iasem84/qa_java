@@ -1,14 +1,19 @@
 import com.example.Feline;
 import com.example.Lion;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class LionParamTest {
     Lion lion;
+
+    @Mock
     Feline feline;
 
     private final String sex;
@@ -27,9 +32,13 @@ public class LionParamTest {
         };
     }
 
+    @Before
+    public void setUpMocks(){
+        MockitoAnnotations.openMocks(this);
+    }
+
     @Test
     public void doesHaveManeTest() throws Exception {
-        feline = new Feline();
         lion = new Lion(sex, feline);
 
         boolean actualResult = lion.doesHaveMane();

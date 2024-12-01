@@ -2,31 +2,39 @@ import com.example.Feline;
 import com.example.Lion;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class LionTest {
 
     Lion lion;
+
+    @Mock
     Feline feline;
 
     @Before
     public void initLion() throws Exception {
-        feline = new Feline();
         lion = new Lion("Самка", feline);
     }
 
     @Test
-    public void getFoodTest() throws Exception {
-        List<String> expectedResult = List.of("Животные", "Птицы", "Рыба");
-        List<String> actualResult = lion.getFood();
-        assertEquals(expectedResult, actualResult);
+    public void getFoodReturnCorrectListTest() throws Exception {
+        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        List<String> expectedList = List.of("Животные", "Птицы", "Рыба");
+        List<String> actualList = lion.getFood();
+        assertEquals("Львы - хищники, они не едят траву!", expectedList, actualList);
     }
 
     @Test
-    public void getKittensTest() {
+    public void getKittensReturnCorrectResultTest() {
+        Mockito.when(feline.getKittens()).thenReturn(1);
         int expectedResult = 1;
         int actualResult = lion.getKittens();
         assertEquals(expectedResult, actualResult);
@@ -39,11 +47,9 @@ public class LionTest {
 
     @Test
     public void exceptionTextTest() {
+        Exception exception = assertThrows(Exception.class, () -> new Lion(" ", feline));
         String expectedMessage = "Используйте допустимые значения пола животного - самец или самка";
-        try {
-            new Lion(" ", feline);
-        } catch(Exception e) {
-            assertEquals(expectedMessage, e.getMessage());
-        }
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 }

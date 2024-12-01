@@ -16,23 +16,30 @@ public class FelineTest {
     }
 
     @Test
-    public void getFamilyTest() {
-        String expectedResult = "Кошачьи";
-        String actualResult = feline.getFamily();
-        assertEquals(expectedResult, actualResult);
+    public void getFamilyReturnCorrectAnswerTest() {
+        String expectedAnswer = "Кошачьи";
+        String actualAnswer = feline.getFamily();
+        assertEquals("Кошки относятся к семейству кошачьих!", expectedAnswer, actualAnswer);
     }
 
     @Test
-    public void eatMeatTest() throws Exception {
-        List<String> expectedResult = List.of("Животные", "Птицы", "Рыба");
-        List<String> actualResult = feline.eatMeat();
-        assertEquals(expectedResult, actualResult);
+    public void eatMeatReturnCorrectListTest() throws Exception {
+        List<String> expectedList = List.of("Животные", "Птицы", "Рыба");
+        List<String> actualList = feline.eatMeat();
+        assertEquals("Кошки - хищники, они не едят траву!", expectedList, actualList);
     }
 
     @Test
-    public void getKittensWithArgsTest(){
+    public void getKittensWithArgsReturnCorrectResultTest(){
         int expectedResult = 4;
         int actualResult = feline.getKittens(4);
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void getKittensWithoutArgsReturnCorrectResultTest() {
+        int expectedResult = 1;
+        int actualResult = feline.getKittens();
         assertEquals(expectedResult, actualResult);
     }
 }
